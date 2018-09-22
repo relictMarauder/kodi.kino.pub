@@ -308,7 +308,8 @@ def trailer(id, sid=None):
         url = get_mlink(
             trailer,
             quality=__settings__.getSetting("video_quality"),
-            streamType=__settings__.getSetting("stream_type")
+            stream_type=__settings__.getSetting("stream_type"),
+            ask_quality=__settings__.getSetting("ask_quality")
         )
     elif sid is not None:
         url = "plugin://plugin.video.youtube/?path=/root/video&action=play_video&videoid={}"
