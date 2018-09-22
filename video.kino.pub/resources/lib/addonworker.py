@@ -154,9 +154,11 @@ def genres(type):
 
 
 @route("/items")
-def items(type, **kwargs):
+def items(type, page=None, **kwargs):
     """List items with pagination"""
     kwargs["type"] = type
+    if page:
+        kwargs["page"] = page
     response = KinoPubClient("items").get(data=kwargs)
     pagination = response["pagination"]
     add_default_headings(type, fmt="s")
