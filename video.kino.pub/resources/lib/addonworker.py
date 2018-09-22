@@ -336,7 +336,7 @@ def search(page=None, type=None):
 
 
 @route("/bookmarks")
-def bookmarks(folder_id=None):
+def bookmarks(folder_id=None, page=None):
     if folder_id is None:
         response = KinoPubClient("bookmarks").get()
         for folder in response["items"]:
@@ -348,9 +348,12 @@ def bookmarks(folder_id=None):
         xbmcplugin.endOfDirectory(request.handle)
     else:
         # Show content of the folder
-        response = KinoPubClient("bookmarks/{}".format(folder_id)).get()
+        if page is None:
+            response = KinoPubClient("bookmarks/view").get(data={"folder": folder_id})
+        else:
+            response = KinoPubClient("bookmarks/view").get(data={"folder": folder_id, "page": page})
         show_items(response["items"])
-        show_pagination(response["pagination"], "bookmarks")
+        show_pagination(response["pagination"], "bookmarks", folder_id=folder_id)
         xbmcplugin.endOfDirectory(request.handle)
 
 
